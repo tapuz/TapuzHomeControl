@@ -1,7 +1,7 @@
 var app = require('express')();
 var http = require('http').Server(app);
 var io = require('socket.io')(http);
-var last_color = "blue";
+var last_color = "red";
 var connections;
 
 app.get('/', function(req, res){

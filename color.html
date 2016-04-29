@@ -1,0 +1,84 @@
+<!doctype html>
+<meta name="viewport" content="width=device-width,maximum-scale=1,minimum-scale=1,user-scalable=no"/>
+<meta name="apple-mobile-web-app-capable" content="yes"/>
+<meta name="apple-mobile-web-app-status-bar-style" content="black"/>
+<meta name="HandheldFriendly" content="True"/>
+	
+	
+<html>
+<head>
+	<title>Colorize</title>
+</head>
+<body id="thebody">
+	<div id="color">
+	</div>
+<script src="https://cdn.socket.io/socket.io-1.2.0.js"></script>
+<script src="http://code.jquery.com/jquery-1.11.1.js"></script>
+<script src="http://ajax.googleapis.com/ajax/libs/jqueryui/1.8.23/jquery-ui.min.js"></script>
+<script>
+	var socket = io.connect('');
+	var myStrobe;
+	var set_color;
+	var colors =  ["red", "orange"] //array
+    var i=0;
+
+	//set color 2 for now
+	
+	function stroboscoop(){
+    		switch (i){
+			case i = 1:
+				$('body').css("background-color",'black');
+				i=2;
+                        
+			return;
+			break;
+			case i = 2:
+				$('body').css("background-color",set_color);
+				i=1;
+                        
+                        return;
+			break;
+		}
+		
+	}
+
+
+
+	socket.emit('first_color','first_color');
+	socket.on('first_color', function (color){
+		set_color = color;
+		colors[0] = color;
+		$('body').css("background-color",set_color);
+	});
+ 
+	socket.on('color', function(color){
+		set_color = color;
+		colors[0] = color;
+		$('body').css("background-color",set_color);
+		
+	});
+
+	socket.on('mode', function(mode){
+		switch (mode) {
+      			case 'strobe':
+        			myStrobe = setInterval(stroboscoop, 33);
+ 				
+				break;
+        		case 'static':
+				clearInterval(myStrobe);
+                                $('body').css("background-color",set_color);
+				break;
+				
+				case 'fade':
+					clearInterval(myStrobe);
+					i++;
+					i=i%5;
+					$('body').animate({backgroundColor: colors[i]},100);
+				break;
+			
+			}
+		});
+      
+</script>
+</body>
+</html>

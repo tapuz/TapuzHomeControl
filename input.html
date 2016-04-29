@@ -1,0 +1,71 @@
+<script src="https://cdn.socket.io/socket.io-1.2.0.js"></script>
+<link href="http://dev.rugcentrumgent.be/wp/app/assets/css/bootstrap.min.css" rel="stylesheet">
+<script src="http://dev.rugcentrumgent.be/wp/app/assets/js/jquery-2.0.3.min.js"></script>
+
+<style>
+    .green {background-color: green; height: 30%; width: 25%; }
+    .yellow {background-color: yellow; height: 30%; width:25%;}
+    .red {background-color: red; height: 30%; width: 25%;}
+    .blue {background-color: blue; height: 30%; width: 25%;}
+    .white {background-color: white; height: 30%; width: 25%;}
+</style>
+
+<script>
+$(function() {
+   
+
+    var socket = io.connect('http://tapuz.synology.me:3000');
+    
+    $('.color').click(function(){
+        var color = $(this).attr( 'id' );
+        socket.emit('color', color);
+    });
+    
+    $('#strobe_on').click(function(){
+        socket.emit('strobe', 'strobe_on');
+        
+    });
+    
+    $('#strobe_off').click(function(){
+        socket.emit('strobe', 'strobe_off');
+        
+    });
+     $('#fade').click(function(){
+        socket.emit('fade', '');
+        
+    });
+
+
+});
+</script>
+<div class="container">
+    <div class="row">
+        <div class="col-md-3 green color" id="green">
+            
+        </div>
+        <div class="col-md-3 yellow color" id="yellow">
+            
+        </div>
+        <div class="col-md-3 red color" id="red">
+            
+        </div>
+        <div class="col-md-3 blue color" id="blue">
+            
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-3 white color" id="white">
+            
+        </div>
+    </div>
+    <div class="row">
+        <button class="btn-primary" id="strobe_on">Strobe ON</button>
+        <button class="btn-primary" id="strobe_off">Strobe OFF</button>
+        <button class="btn-primary" id="fade">face</button>
+    </div>
+    
+    
+    
+    
+    
+</div>

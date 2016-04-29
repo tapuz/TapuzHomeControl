@@ -15,12 +15,13 @@
 <script src="https://cdn.socket.io/socket.io-1.2.0.js"></script>
 <script src="http://code.jquery.com/jquery-1.11.1.js"></script>
 <script src="http://ajax.googleapis.com/ajax/libs/jqueryui/1.8.23/jquery-ui.min.js"></script>
+<script src="server-ip.js"></script>
 <script>
 	var socket = io.connect('http://23.251.135.169:3000/');
 	var myStrobe;
 	var set_color;
 	var colors =  ["red", "orange"] //array
-    var i=0;
+    	var i=0;
 
 	//set color 2 for now
 	
@@ -61,20 +62,17 @@
 	socket.on('mode', function(mode){
 		switch (mode) {
       			case 'strobe':
-				$('body').css("background-color",set_color);
         			myStrobe = setInterval(stroboscoop, 33);
- 				
 				break;
         		case 'static':
 				clearInterval(myStrobe);
                                 $('body').css("background-color",set_color);
 				break;
-				
-				case 'fade':
-					clearInterval(myStrobe);
-					i++;
-					i=i%5;
-					$('body').animate({backgroundColor: colors[i]},100);
+			case 'fade':
+				clearInterval(myStrobe);
+				i++;
+				i=i%5;
+				$('body').animate({backgroundColor: colors[i]},100);
 				break;
 			
 			}

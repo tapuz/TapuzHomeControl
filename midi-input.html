@@ -3,61 +3,14 @@
 	<script src="https://cdn.socket.io/socket.io-1.2.0.js"></script>
 	<script src="https://code.jquery.com/jquery-1.12.0.min.js"></script>
 	<script src="https://code.jquery.com/jquery-migrate-1.2.1.min.js"></script>
-	<meta charset="UTF-8">
+	<link rel="stylesheet" type="text/css" href="css-input-midi.css">
+   	<meta charset="UTF-8">
 	<title>Livecolors | Input | Midi</title>
-	<style>
-	*:before, *:after {
-			-webkit-box-sizing: border-box;
-			-moz-box-sizing: border-box;
-			box-sizing: border-box;
-		}
-		h4 {
-			margin: 0 0 5px 0;
-		}
-		p {
-			margin: 0 0 10px 0;
-		}
-		#content, #device_info {
-			max-width: 800px;
-			margin: 0 auto;
-			padding: 10px 0;
-			font-family: sans-serif;
-			font-size: 12px;
-			line-height: 12px;
-			letter-spacing: 1.5px;
-		}
-		#content, #key_data {
-			margin-top: 0px;
-			text-align: center;
-		}
-		#inputs, #outputs {
-			display: inline-block;
-			width: 49%;
-			margin-top: 10px;
-			vertical-align: top;
-		}
-		#outputs {
-			text-align: right;
-		}
-		.info {
-			padding: 20px;
-			border-radius: 3px;
-			box-shadow: inset 0 0 10px #ccc;
-			background-color: rgba(233,233,233,0.25);
-		}
-		.small {
-			border-bottom: 1px solid #ccc;
-			margin-left: 10px;
-		}
-		p:not(.small){
-			text-transform: uppercase;
-			font-weight: 800;
-		}
-	</style>
 </head>
 <body id="body">
 	<div id="outputwindow" style="border:black thin solid ; min-width:500px; min-height:200px">
    	</div>
+    <br>
 	<div id="connections">
 	</div>
     	<div id="device_info">
@@ -73,10 +26,17 @@
 		var log = console.log.bind(console), keyData = document.getElementById('key_data'), 
 				deviceInfoInputs = document.getElementById('inputs'), deviceInfoOutputs = document.getElementById('outputs'), 
 				device = document.querySelector('.device-name'), midi;
+		var set_color;
 		
 		// send connections to midi input page
 		socket.on('connections', function(connections){
-			$('#connections').html(connections)
+			$('#connections').html("Connected devices: " + connections)
+		});
+		
+		// set preview window to the last color sent to the server
+		socket.on('first_color', function (color){
+			set_color = color;
+			$('#outputwindow').css("background-color",set_color);
 		});
 
 		// request MIDI access

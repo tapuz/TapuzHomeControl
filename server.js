@@ -2,8 +2,7 @@ var app = require('express')();
 var http = require('http').Server(app);
 var io = require('socket.io')(http);
 var last_color = "blue";
-var connections
-var t1,t2,interval;
+var connections;
 
 app.get('/', function(req, res){
  	res.sendFile(__dirname + '/color.html');
@@ -18,7 +17,6 @@ io.on('connection', function(socket){
  	connections = count;
  	console.log(connections + ' clients connected');
  	}); 
- 	console.log('client connected');
 
 socket.on('color', function(color){
 	io.emit('color', color);

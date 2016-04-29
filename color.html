@@ -61,7 +61,7 @@
 	socket.on('mode', function(mode){
 		switch (mode) {
       			case 'strobe':
-				clearInterval(myStrobe);
+				$('body').css("background-color",set_color);
         			myStrobe = setInterval(stroboscoop, 33);
  				
 				break;

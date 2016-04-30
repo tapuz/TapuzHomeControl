@@ -8,7 +8,7 @@
 	<title>Livecolors | Input | Midi</title>
 </head>
 <body id="body">
-	<div id="outputwindow" style="border:black thin solid ; min-width:500px; min-height:200px">
+	<div id="outputwindow" style="min-width:500px; min-height:200px">
    	</div>
     <br>
 	<div id="connections">
@@ -28,15 +28,19 @@
 				device = document.querySelector('.device-name'), midi;
 		var set_color;
 		
+		// check if there is a connection to the server
+		socket.on('connect', function () {
+				$('#outputwindow').addClass("green");
+		});
+		
+		socket.on('disconnect', function () {
+				$('#outputwindow').addClass("red");
+		});
+		
+		
 		// send connections to midi input page
 		socket.on('connections', function(connections){
 			$('#connections').html("Connected devices: " + connections)
-		});
-		
-		// set preview window to the last color sent to the server
-		socket.on('first_color', function (color){
-			set_color = color;
-			$('#outputwindow').css("background-color",set_color);
 		});
 
 		// request MIDI access
@@ -102,46 +106,64 @@
 		function noteOn(midiNote, velocity){
 
 			switch(midiNote){
-				case 0:
+				case 1:
 					socket.emit('color', '#000000');
 					$('#outputwindow').css("background-color", "#000000");
 					break;
-				case 1:
+				case 2:
 					socket.emit('color', '#FFFFFF');
 					$('#outputwindow').css("background-color", "#FFFFFF");
 					break;
-				case 2:
+				case 3:
 					socket.emit('color', '#AB0002');
 					$('#outputwindow').css("background-color", "#AB0002");
 					break;
-				case 3:
+				case 4:
 					socket.emit('color', '#00CC00');
 					$('#outputwindow').css("background-color", "#00CC00");
 					break;
-				case 4:
+				case 5:
 					socket.emit('color', '#0000FF');
 					$('#outputwindow').css("background-color", "#0000FF");
 					break;
-				case 5:
+				case 6:
 					socket.emit('color', '#00FFFF');
 					$('#outputwindow').css("background-color", "#00FFFF");
 					break;
-				case 6:
+				case 7:
+					socket.emit('color', '#00FFFF');
+					$('#outputwindow').css("background-color", "#00FF5E");
+					break;
+				case 8:
+					socket.emit('color', '#00FFFF');
+					$('#outputwindow').css("background-color", "#FF8D00");
+					break;
+				case 9:
+					socket.emit('color', '#00FFFF');
+					$('#outputwindow').css("background-color", "#3C00FF");
+					break;
+				case 21:
 					socket.emit('strobe', 'strobe_off');
 					break;
-				case 7:
+				case 22:
 					socket.emit('strobe', 'strobe_on');
+					break;
+				case 31:
+					socket.emit('fade', '0');
+					break;
+				case 32:
+					socket.emit('fade', '100');
+					break;
+				case 33:
+					socket.emit('fade', '1000');
+					break;
+				case 34:
+					socket.emit('fade', '2000');
 					break;
 				}
 		}
 
 		function noteOff(midiNote, velocity){
-			
-			switch(midiNote){
-				case 7:
-					socket.emit('strobe', 'strobe_off');
-					break;
-				}
 			
 		}
 

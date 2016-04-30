@@ -3,24 +3,28 @@
 <meta name="apple-mobile-web-app-capable" content="yes"/>
 <meta name="apple-mobile-web-app-status-bar-style" content="black"/>
 <meta name="HandheldFriendly" content="True"/>
-	
-	
 <html>
+<style type="text/css">
+	#connectionstatus {
+		position: fixed;
+		bottom: 0;
+		width: 100%;
+	}
+</style>
 <head>
-	<title>Live Colors</title>
+<title>Live Colors</title>
 </head>
-<body id="thebody">
-	<div id="color">
-	</div>
-<script src="https://cdn.socket.io/socket.io-1.2.0.js"></script>
-<script src="http://code.jquery.com/jquery-1.11.1.js"></script>
-<script src="http://ajax.googleapis.com/ajax/libs/jqueryui/1.8.23/jquery-ui.min.js"></script>
+<body>
+<div id="connectionstatus"></div>
+<script src="https://cdn.socket.io/socket.io-1.2.0.js"></script> 
+<script src="http://code.jquery.com/jquery-1.11.1.js"></script> 
+<script src="http://ajax.googleapis.com/ajax/libs/jqueryui/1.8.23/jquery-ui.min.js"></script> 
 <script>
 	var socket = io.connect('http://23.251.135.169:3000/');
 	var myStrobe;
 	var set_color;
 	var colors =  ["red", "orange"] //array
-    	var i=0;
+    var i=0;
 
 	//set color 2 for now
 	
@@ -42,7 +46,10 @@
 		
 	}
 
-
+	// check if there is a connection to the server
+	socket.on('connect', function () {
+				$('#connectionstatus').html('Connection OK');
+		});
 
 	socket.emit('first_color','first_color');
 	socket.on('first_color', function (color){
@@ -60,12 +67,12 @@
 
 	socket.on('mode', function(mode){
 		switch (mode) {
-      			case 'strobe':
-        			myStrobe = setInterval(stroboscoop, 33);
+      		case 'strobe':
+				myStrobe = setInterval(stroboscoop, 33);
 				break;
-        		case 'static':
+        	case 'static':
 				clearInterval(myStrobe);
-                                $('body').css("background-color",set_color);
+				$('body').css("background-color",set_color);
 				break;
 			case 'fade':
 				clearInterval(myStrobe);
@@ -73,9 +80,8 @@
 				i=i%5;
 				$('body').animate({backgroundColor: colors[i]},100);
 				break;
-			
 			}
-		});
+	});
       
 </script>
 </body>

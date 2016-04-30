@@ -45,3 +45,11 @@ p:not(.small){
 	text-transform: uppercase;
 	font-weight: 800;
 }
+
+.green{
+	border:thick solid rgba(18,255,0,1.00)
+}
+
+.red{
+	border:thick solid rgba(255,0,4,1.00)
+	}

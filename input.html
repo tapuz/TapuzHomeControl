@@ -30,9 +30,17 @@ $(function() {
         socket.emit('strobe', 'strobe_off');
         
     });
-     $('#fade').click(function(){
-        socket.emit('fade', '');
-        
+    $('#fade0').click(function(){
+        socket.emit('fade', 0);
+    });
+	$('#fade100').click(function(){
+        socket.emit('fade', 100);
+    });
+	$('#fade1000').click(function(){
+        socket.emit('fade', 1000);
+    });
+	$('#fade2000').click(function(){
+        socket.emit('fade', 2000);
     });
 
 
@@ -61,7 +69,10 @@ $(function() {
     <div class="row">
         <button class="btn-primary" id="strobe_on">Strobe ON</button>
         <button class="btn-primary" id="strobe_off">Strobe OFF</button>
-        <button class="btn-primary" id="fade">face</button>
+        <button class="btn-primary" id="fade0">Fade 0</button>
+        <button class="btn-primary" id="fade100">Fade 100</button>
+        <button class="btn-primary" id="fade1000">Fade 1000</button>
+        <button class="btn-primary" id="fade2000">Fade 2000</button>
     </div>
     
     

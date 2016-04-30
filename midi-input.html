@@ -149,16 +149,16 @@
 					socket.emit('strobe', 'strobe_on');
 					break;
 				case 31:
-					socket.emit('fade', '0');
+					socket.emit('fade', 0);
 					break;
 				case 32:
-					socket.emit('fade', '100');
+					socket.emit('fade', 100);
 					break;
 				case 33:
-					socket.emit('fade', '1000');
+					socket.emit('fade', 1000);
 					break;
 				case 34:
-					socket.emit('fade', '2000');
+					socket.emit('fade', 2000);
 					break;
 				}
 		}

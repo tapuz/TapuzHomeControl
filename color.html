@@ -25,23 +25,27 @@
 	var set_color;
 	var colors =  ["red", "orange"] //array
     var i=0;
-
+	var fadebackground;
+	
+	// receive fade timing from server
+	socket.on('fade', function(fade){
+		fadebackground = fade;
+	});
+	
 	//set color 2 for now
 	
 	function stroboscoop(){
     		switch (i){
-			case i = 1:
-				$('body').css("background-color",'black');
-				i=2;
-                        
-			return;
-			break;
-			case i = 2:
-				$('body').css("background-color",set_color);
-				i=1;
-                        
-                        return;
-			break;
+				case i = 1:
+					$('body').css("background-color",'black');
+					i=2;
+					return;
+					break;
+				case i = 2:
+					$('body').css("background-color",set_color);
+					i=1;
+					return;
+					break;
 		}
 		
 	}
@@ -50,19 +54,30 @@
 	socket.on('connect', function () {
 				$('#connectionstatus').html('Connection OK');
 		});
-
+	
 	socket.emit('first_color','first_color');
 	socket.on('first_color', function (color){
-		set_color = color;
-		colors[0] = color;
-		$('body').css("background-color",set_color);
+		if (fadebackground == 0) {
+			set_color = color;
+			colors[0] = color;
+			$('body').css("background-color",set_color);
+		} else {
+			set_color = color;
+			colors[0] = color;
+			$('body').animate({backgroundColor: set_color}, {duration: fadebackground});
+		}
 	});
  
 	socket.on('color', function(color){
-		set_color = color;
-		colors[0] = color;
-		$('body').css("background-color",set_color);
-		
+		if (fadebackground == 0) {
+			set_color = color;
+			colors[0] = color;
+			$('body').css("background-color",set_color);
+		} else {
+			set_color = color;
+			colors[0] = color;
+			$('body').animate({backgroundColor: set_color}, {duration: fadebackground});
+		}
 	});
 
 	socket.on('mode', function(mode){
@@ -74,14 +89,10 @@
 				clearInterval(myStrobe);
 				$('body').css("background-color",set_color);
 				break;
-			case 'fade':
-				clearInterval(myStrobe);
-				i++;
-				i=i%5;
-				$('body').animate({backgroundColor: colors[i]},100);
-				break;
 			}
 	});
+	
+	
       
 </script>
 </body>

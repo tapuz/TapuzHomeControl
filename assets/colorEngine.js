@@ -4,17 +4,49 @@ var set_color;
 var i=0;
 var fadebackground;
 var status = 0;
+var screenLockEnabled = false;
+
+ $('#welcome_content').toggle();
+        $('#preshow_content').toggle();
 
 //request showstatus from the server
 socket.emit('get_showstatus','showstatus');
 socket.on('showstatus', function(status){
 	switch (status){
-		case 0:
+		case 0: //show has not started yet
+			if (screenLockEnabled) {
+				$('#welcome_content').addClass('hidden');
+				$('#preshow_content').removeClass('hidden');
+			}else{
+				$('#welcome_content').removeClass('hidden');
+				$('#preshow_content').addClass('hidden');
+			}
 			$('#livecolors').addClass('hidden');
+			$('#aftershow_content').addClass('hidden');
 			break;
-		case 1:
-			$('#livecolors').removeClass('hidden');
+		case 1: //show has started 
+			if (screenLockEnabled) {
+                $('#livecolors').removeClass('hidden');
+            }else{
+				$('#welcome_content').removeClass('hidden');
+				$('#livecolors').addClass('hidden')
+			}
+			$('#preshow_content').addClass('hidden');
+			$('#aftershow_content').addClass('hidden');
+			
 			break;
+		case 2: //show is finished
+			if (screenLockEnabled) {
+				$('#welcome_content').addClass('hidden');
+				$('#aftershow_content').removeClass('hidden');		
+            }else{
+				$('#welcome_content').removeClass('hidden');
+				$('#aftershow_content').addClass('hidden');
+			}
+			$('#preshow_content').addClass('hidden');
+			$('#livecolors').addClass('hidden')
+			break;
+		
 	}
 });
 

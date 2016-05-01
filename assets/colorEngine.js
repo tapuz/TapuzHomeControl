@@ -3,6 +3,21 @@ var myStrobe;
 var set_color;
 var i=0;
 var fadebackground;
+var status = 0;
+
+//request showstatus from server
+socket.emit('get_showstatus',showstatus);
+socket.on('showstatus', function(status){
+	switch (status){
+		case 0:
+			$('#livecolors').addClass('hidden');
+			break;
+		case 1:
+			$('#livecolors').removeClass('hidden');
+			break;
+	}
+});
+
 
 // receive fade timing from server
 socket.on('fade', function(fade){

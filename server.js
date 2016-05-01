@@ -4,6 +4,7 @@ var io = require('socket.io')(http);
 var last_color = "green";
 var last_fade = 0;
 var connections;
+var showstatus = 0;
 
 app.get('/', function(req, res){
  	res.sendFile(__dirname + '/color.html');
@@ -23,6 +24,14 @@ io.on('connection', function(socket){
 		connections = count;
 		console.log(connections + ' clients connected');
 		}); 
+	
+	socket.on('showstatus'), function(status){
+				showstatus = status;
+		});
+		
+	socket.on('get_showstatus', function (){
+		io.emit('showstatus', showstatus);
+		});
 	
 	socket.on('color', function(color){
 		io.emit('color', color);

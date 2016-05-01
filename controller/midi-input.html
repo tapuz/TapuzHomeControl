@@ -98,11 +98,11 @@
 		$('#toggle').on('click', function() {
 			if (togglebutton == 0) {
 					togglebutton = 1;
-					socket.emit('showtoggle', 'show_on');
+					socket.emit('showstatus', 1);
 					$('#toggle').val('Showtime !');
 				} else {
 					togglebutton = 0;
-					socket.emit('showtoggle', 'show_off');
+					socket.emit('showstatus', 0);
 					$('#toggle').val('No show !');
 				}
 			});

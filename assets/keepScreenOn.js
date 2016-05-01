@@ -6,7 +6,6 @@ $(function() {
    
     
     $('#btn_continue').on('click',function(evt){
-    alert('clicked');
     noSleep.enable(); // keep the screen on!
     $('#startModal').modal('hide'); 
     }

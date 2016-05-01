@@ -28,12 +28,12 @@ socket.on('fade', function(fade){
 function stroboscoop(){
 		switch (i){
 			case i = 1:
-				$('body').css("background-color",'black');
+				$('#livecolors').css("background-color",'black');
 				i=2;
 				return;
 				break;
 			case i = 2:
-				$('body').css("background-color",set_color);
+				$('#livecolors').css("background-color",set_color);
 				i=1;
 				return;
 				break;
@@ -50,20 +50,20 @@ socket.emit('first_color','first_color');
 socket.on('first_color', function (color){
 	if (fadebackground == 0) {
 		set_color = color;
-		$('body').css("background-color",set_color);
+		$('#livecolors').css("background-color",set_color);
 	} else {
 		set_color = color;
-		$('body').animate({backgroundColor: set_color}, {duration: fadebackground});
+		$('#livecolors').animate({backgroundColor: set_color}, {duration: fadebackground});
 	}
 });
 
 socket.on('color', function(color){
 	if (fadebackground == 0) {
 		set_color = color;
-		$('body').css("background-color",set_color);
+		$('#livecolors').css("background-color",set_color);
 	} else {
 		set_color = color;
-		$('body').animate({backgroundColor: set_color}, {duration: fadebackground});
+		$('#livecolors').animate({backgroundColor: set_color}, {duration: fadebackground});
 	}
 });
 
@@ -75,7 +75,7 @@ socket.on('mode', function(mode){
 			break;
 		case 'static':
 			clearInterval(myStrobe);
-			$('body').css("background-color",set_color);
+			$('#livecolors').css("background-color",set_color);
 			break;
 		}
 });

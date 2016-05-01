@@ -3,7 +3,7 @@ var myStrobe;
 var set_color;
 var i=0;
 var fadebackground;
-var status = 0;
+var showstatus = 0;
 var screenLockEnabled = false;
 
  $('#welcome_content').toggle();
@@ -12,7 +12,8 @@ var screenLockEnabled = false;
 //request showstatus from the server
 socket.emit('get_showstatus','showstatus');
 socket.on('showstatus', function(status){
-	switch (status){
+    showstatus = status;
+	switch (showstatus){
 		case 0: //show has not started yet
 			if (screenLockEnabled) {
 				$('#welcome_content').addClass('hidden');

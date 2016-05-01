@@ -101,10 +101,17 @@
 					socket.emit('showtoggle', 1);
 					$('#toggle').val('Showtime !');
 				} else {
-					togglebutton = 0;
-					socket.emit('showtoggle', 0);
-					$('#toggle').val('No show !');
-				}
+						if (togglebutton == 1) {
+								togglebutton = 2;
+								socket.emit('showtoggle', 2);
+								$('#toggle').val('Aftershow !');
+							} else {
+									if (togglebutton == 2) {
+											togglebutton = 0;
+											socket.emit('showtoggle', 0);
+											$('#toggle').val('No Show !');
+										}}}
+			
 			});
         		
 		

@@ -9,8 +9,12 @@ app.get('/', function(req, res){
 	});
 
 app.get('/input', function(req, res){
- 	res.sendFile(__dirname + '/input.html');
+ 	res.sendFile(__dirname + '/controller/input.html');
 	});
+	
+app.get('/midi', function(req, res){
+ 	res.sendFile(__dirname + '/controller/midi-input.html');
+	});	
 
 io.on('connection', function(socket){
  	

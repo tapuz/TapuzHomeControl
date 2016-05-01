@@ -6,7 +6,7 @@ var fadebackground;
 var status = 0;
 
 //request showstatus from server
-socket.emit('get_showstatus',showstatus);
+socket.emit('get_showstatus','showstatus');
 socket.on('showstatus', function(status){
 	switch (status){
 		case 0:

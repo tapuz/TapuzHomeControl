@@ -3,10 +3,13 @@
 	<script src="https://cdn.socket.io/socket.io-1.2.0.js"></script>
 	<script src="https://code.jquery.com/jquery-1.12.0.min.js"></script>
 	<script src="https://code.jquery.com/jquery-migrate-1.2.1.min.js"></script>
-	<link rel="stylesheet" type="text/css" href="../css-input-midi.css">
    	<meta charset="UTF-8">
 	<title>Livecolors | Input | Midi</title>
     <style>
+		body {
+			background-color:rgba(58,58,58,1.00);
+			color:rgba(116,116,116,1.00);
+			}
 		*:before, *:after {
 			-webkit-box-sizing: border-box;
 			-moz-box-sizing: border-box;
@@ -18,9 +21,13 @@
 		p {
 			margin: 0 0 10px 0;
 		}
+		
+		#outputwindow {
+			border:thin solid rgba(162,162,162,1.00);
+			}
+		
 		#content, #device_info, #connections {
 			max-width: 800px;
-			margin: 0 auto;
 			padding: 10px 0;
 			font-family: sans-serif;
 			font-size: 12px;
@@ -29,22 +36,17 @@
 		}
 		#content, #key_data {
 			margin-top: 0px;
-			text-align: center;
+			text-align: left;
 		}
 		#inputs, #outputs {
-			display: inline-block;
-			width: 49%;
+			width: 50%;
 			margin-top: 10px;
 			vertical-align: top;
 		}
-		#outputs {
-			text-align: right;
-		}
 		.info {
 			padding: 20px;
-			border-radius: 3px;
-			box-shadow: inset 0 0 10px #ccc;
-			background-color: rgba(233,233,233,0.25);
+			border:thin solid rgba(162,162,162,1.00);
+			background-color: rgba(58,58,58,1.00);
 		}
 		.small {
 			border-bottom: 1px solid #ccc;
@@ -54,29 +56,25 @@
 			text-transform: uppercase;
 			font-weight: 800;
 		}
-		
-		.green{
-			border:thick solid rgba(18,255,0,1.00)
-		}
-		
-		.red{
-			border:thick solid rgba(255,0,4,1.00)
-			}
 	</style>
 </head>
 <body id="body">
-	<div id="outputwindow" style="min-width:500px; min-height:200px">
+	<h1>Live Preview</h1>
+    <iframe src="http://23.251.135.169/livecolors/color.html" style="border:thin solid rgba(162,162,162,1.00)" width="100%" height="100"></iframe>
+    <br>
+    <h1>Controller Output</h1>
+	<div id="outputwindow" style="min-width:500px; min-height:100px">
    	</div>
     <br>
-	<div id="connections">
-	</div>
+    
+	<h1 id="connections"></h1>
     	<div id="device_info">
 		<h1 class='device-name'></h1>
 		<div id="key_data"></div>
 		<div id="inputs"></div>
 		<div id="outputs"></div>
 	</div>
-
+	
 	<script>
 	(function(){
 		var socket = io.connect('http://23.251.135.169:3000');
@@ -84,16 +82,6 @@
 				deviceInfoInputs = document.getElementById('inputs'), deviceInfoOutputs = document.getElementById('outputs'), 
 				device = document.querySelector('.device-name'), midi;
 		var set_color;
-		
-		// check if there is a connection to the server
-		socket.on('connect', function () {
-				$('#outputwindow').addClass("green");
-		});
-		
-		socket.on('disconnect', function () {
-				$('#outputwindow').addClass("red");
-		});
-		
 		
 		// send connections to midi input page
 		socket.on('connections', function(connections){

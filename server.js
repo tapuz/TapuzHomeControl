@@ -25,8 +25,10 @@ io.on('connection', function(socket){
 		console.log(connections + ' clients connected');
 		}); 
 	
-	socket.on('showstatus', function(status){
+	
+	socket.on('showtoggle', function(status){
 				showstatus = status;
+	    io.emit('showstatus', showstatus);
 		});
 		
 	socket.on('get_showstatus', function (){

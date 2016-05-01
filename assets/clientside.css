@@ -1,0 +1,72 @@
+.modal.fade:not(.in) .modal-dialog {
+    -webkit-transform: translate3d(-25%, 0, 0);
+    transform: translate3d(-25%, 0, 0);
+	}
+	
+	
+html, body { height: 100%; margin: 0; padding: 0; }
+
+/* Essentials */
+.container {
+	display: table;
+	background-image: url("http://static1.squarespace.com/static/57041fae45bf214b427b0bff/t/570bd6948a65e23b63a4e50f/1460393621709/ModernHeart.jpg");
+	background-position: center center;
+	background-size: cover;
+	background-attachment: fixed;
+	background-repeat: no-repeat;
+	z-index:1;
+}
+.content { display: table-row; height: 100%; }
+.content-body { display: table-cell; }
+
+/* Aestetics */
+.container { width: 100%; height: 100%; }
+.header, .footer { padding: 10px 20px;}
+.content-body { padding: 20px;}
+
+
+#title-area{
+	background-image: url("http://23.251.135.169/livecolors/assets/img/logomilow.png");
+	background-position: center center;
+	background-repeat: no-repeat;
+	height: 50px;
+}
+
+#livecolors {
+	width: 100%;
+	height: 100%;
+	top: 0;
+	right: 0;
+	bottom: 0;
+	left: 0;
+	position: absolute;
+	z-index: 2;
+	background-color: blue;	
+}
+#buttoncontainer{
+	text-align:center;
+	}
+
+#btn_entershow {
+	width: 200px;
+	height: 60px;
+	border: 2px rgba(255,255,255,1.00) solid;
+	background-color: transparent;
+	color: rgba(255,255,255,1.00);
+	font-size: large;
+	text-transform: uppercase;
+	margin-top: 100px;
+	}
+
+#welcome_content, #preshow_content, #aftershow_content{
+	margin-top:100px;
+	min-width:50%;
+	margin-left:25%;
+	margin-right:25%;
+	color:rgba(255,255,255,1.00);
+	font-size:24px;
+	}
+
+#textfield{
+	text-align:center;
+	}

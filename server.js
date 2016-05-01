@@ -2,6 +2,7 @@ var app = require('express')();
 var http = require('http').Server(app);
 var io = require('socket.io')(http);
 var last_color = "green";
+var last_fade = 0;
 var connections;
 
 app.get('/', function(req, res){
@@ -32,8 +33,13 @@ io.on('connection', function(socket){
 	socket.on('first_color', function (color){
 		io.emit('first_color', last_color);
 		});
+		
+	socket.on('first_fade', function (fade){
+		io.emit('first_fade', last_fade);
+		});
 	
 	socket.on('fade',function(fade){
+		last_fade = fade;
 		io.emit('fade',fade);
 		console.log(fade);    
 		});

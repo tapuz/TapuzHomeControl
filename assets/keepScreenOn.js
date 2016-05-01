@@ -3,10 +3,14 @@ $(function() {
 
     $('#startModal').modal('show'); 
 	
-    $('#startModal').on('hidden.bs.modal', function (e) {
-        noSleep.enable(); // keep the screen on!         
-  
-    })	
+   
+    
+    $('#btn_continue').on('click',function(evt){
+    alert('clicked');
+    noSleep.enable(); // keep the screen on!
+    $('#startModal').modal('hide'); 
+    }
+    );
 	
    
    

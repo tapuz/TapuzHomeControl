@@ -31,7 +31,6 @@
 		fadebackground = fade;
 	});
 	
-	//set color 2 for now
 	
 	function stroboscoop(){
     		switch (i){
@@ -58,11 +57,9 @@
 	socket.on('first_color', function (color){
 		if (fadebackground == 0) {
 			set_color = color;
-			colors[0] = color;
 			$('body').css("background-color",set_color);
 		} else {
 			set_color = color;
-			colors[0] = color;
 			$('body').animate({backgroundColor: set_color}, {duration: fadebackground});
 		}
 	});
@@ -70,11 +67,9 @@
 	socket.on('color', function(color){
 		if (fadebackground == 0) {
 			set_color = color;
-			colors[0] = color;
 			$('body').css("background-color",set_color);
 		} else {
 			set_color = color;
-			colors[0] = color;
 			$('body').animate({backgroundColor: set_color}, {duration: fadebackground});
 		}
 	});

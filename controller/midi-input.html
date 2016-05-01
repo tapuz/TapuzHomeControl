@@ -1,8 +1,8 @@
 <html>
 <head>
 	<script src="https://cdn.socket.io/socket.io-1.2.0.js"></script>
-	<script src="https://code.jquery.com/jquery-1.12.0.min.js"></script>
-	<script src="https://code.jquery.com/jquery-migrate-1.2.1.min.js"></script>
+	<script src="http://23.251.135.169/livecolors/assets/jquery-2.2.3.min.js"></script> 
+    <script src="http://ajax.googleapis.com/ajax/libs/jqueryui/1.8.23/jquery-ui.min.js"></script> 
    	<meta charset="UTF-8">
 	<title>Livecolors | Input | Midi</title>
     <style>
@@ -22,7 +22,7 @@
 			margin: 0 0 10px 0;
 		}
 		
-		#outputwindow {
+		#outputwindow, #previewwindow {
 			border:thin solid rgba(162,162,162,1.00);
 			}
 		
@@ -56,17 +56,24 @@
 			text-transform: uppercase;
 			font-weight: 800;
 		}
+		#toggle{
+			width:100px;
+			background:rgba(155,155,155,1.00);
+			border:none;
+			height:40px;
+			}
 	</style>
 </head>
 <body id="body">
 	<h1>Live Preview</h1>
-    <iframe src="http://23.251.135.169/livecolors/color.html" style="border:thin solid rgba(162,162,162,1.00)" width="100%" height="100"></iframe>
+    <div id="previewwindow" style="min-width:500px; min-height:100px"></div>
     <br>
     <h1>Controller Output</h1>
 	<div id="outputwindow" style="min-width:500px; min-height:100px">
    	</div>
     <br>
-    
+    <input type="button" id="toggle" value="No show !" />
+    <br>
 	<h1 id="connections"></h1>
     	<div id="device_info">
 		<h1 class='device-name'></h1>
@@ -82,6 +89,87 @@
 				deviceInfoInputs = document.getElementById('inputs'), deviceInfoOutputs = document.getElementById('outputs'), 
 				device = document.querySelector('.device-name'), midi;
 		var set_color;
+		var fadebackground;
+		var myStrobe;
+		var i=0;
+		var togglebutton=0;
+		
+		// showtoggle
+		$('#toggle').on('click', function() {
+			if (togglebutton == 0) {
+					togglebutton = 1;
+					socket.emit('showtoggle', 'show_on');
+					$('#toggle').val('Showtime !');
+				} else {
+					togglebutton = 0;
+					socket.emit('showtoggle', 'show_off');
+					$('#toggle').val('No show !');
+				}
+			});
+        		
+		
+		// get first fadetime from server
+		socket.emit('first_fade','first_fade');
+		socket.on('first_fade', function(firstfade){
+			fadebackground = firstfade;
+		});
+		
+		// get stream of fadetimes from server
+		socket.on('fade', function(fade){
+			fadebackground = fade;
+		});
+		
+		//getting strobe information from server
+		socket.on('mode', function(mode){
+			switch (mode) {
+				case 'strobe':
+					clearInterval(myStrobe);
+					myStrobe = setInterval(stroboscoop, 33);
+					break;
+				case 'static':
+					clearInterval(myStrobe);
+					$('#previewwindow').css("background-color",set_color);
+					break;
+				}
+		});
+		
+		function stroboscoop(){
+			switch (i){
+				case i = 1:
+					$('#previewwindow').css("background-color",'black');
+					i=2;
+					return;
+					break;
+				case i = 2:
+					$('#previewwindow').css("background-color",set_color);
+					i=1;
+					return;
+					break;
+			}
+		}
+		
+		// get previewcolor from server
+		socket.on('first_color', function (color){
+			if (fadebackground == 0) {
+				set_color = color;
+				$('#previewwindow').css("background-color",set_color);
+			} else {
+				set_color = color;
+				$('#previewwindow').animate({backgroundColor: set_color}, {duration: fadebackground});
+			}
+		});
+
+		socket.on('color', function(color){
+			if (fadebackground == 0) {
+				set_color = color;
+				$('#previewwindow').css("background-color",set_color);
+			} else {
+				set_color = color;
+				$('#previewwindow').animate({backgroundColor: set_color}, {duration: fadebackground});
+			}
+		});
+		
+		
 		
 		// send connections to midi input page
 		socket.on('connections', function(connections){

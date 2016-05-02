@@ -10,7 +10,8 @@ html, body { height: 100%; margin: 0; padding: 0; }
 .container {
 	display: table;
 	background-image: url("http://static1.squarespace.com/static/57041fae45bf214b427b0bff/t/570bd6948a65e23b63a4e50f/1460393621709/ModernHeart.jpg");
-	background-position: calc(50% - 100px) 50%;
+	/*background-position: calc(50% - 100px) 50%;*/
+    background-position: center center;
 	background-size: cover;
 	background-attachment: fixed;
 	background-repeat: no-repeat;

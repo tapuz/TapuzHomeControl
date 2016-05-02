@@ -11,10 +11,11 @@
 </style>
 
 <script>
+	
 $(function() {
    
-
-    var socket = io.connect('http://23.251.135.169:3000/');
+	var socket = io.connect('http://23.251.135.169:3000/');
+    
     
     $('.color').click(function(){
         var color = $(this).attr( 'id' );
@@ -43,6 +44,21 @@ $(function() {
         socket.emit('fade', 2000);
     });
 
+	$('#showstatus_0').click(function(){
+        socket.emit('showtoggle', 0);
+    });
+	
+	
+	$('#showstatus_1').click(function(){
+        socket.emit('showtoggle', 1);
+    });
+	
+	
+	$('#showstatus_2').click(function(){
+        socket.emit('showtoggle', 2);
+    });
+	
+	
 
 });
 </script>
@@ -73,8 +89,13 @@ $(function() {
         <button class="btn-primary" id="fade100">Fade 100</button>
         <button class="btn-primary" id="fade1000">Fade 1000</button>
         <button class="btn-primary" id="fade2000">Fade 2000</button>
+		
     </div>
-    
+    <div class="row">
+		<button class="btn-primary" id="showstatus_0">Pre-show</button>
+		<button class="btn-primary" id="showstatus_1">Show</button>
+		<button class="btn-primary" id="showstatus_2">Post-Show</button>
+	</div>
     
     
     

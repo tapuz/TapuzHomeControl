@@ -28,11 +28,12 @@ socket.on('showstatus', function(status){
 		case 1: //show has started 
 			if (screenLockEnabled) {
                 $('#livecolors').removeClass('hidden');
+                $('#welcome_content').addClass('hidden');
             }else{
 				$('#welcome_content').removeClass('hidden');
 				$('#livecolors').addClass('hidden')
 			}
-            $('#welcome_content').addClass('hidden');
+            
 			$('#preshow_content').addClass('hidden');
 			$('#aftershow_content').addClass('hidden');
 			

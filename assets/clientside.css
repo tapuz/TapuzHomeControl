@@ -54,7 +54,7 @@ html, body { height: 100%; margin: 0; padding: 0; }
 	left: 0;
 	position: absolute;
 	z-index: 2;
-	background-color: blue;	
+	background-color: black;	
 }
 #buttoncontainer{
 	text-align:center;

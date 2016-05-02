@@ -32,6 +32,7 @@ socket.on('showstatus', function(status){
 				$('#welcome_content').removeClass('hidden');
 				$('#livecolors').addClass('hidden')
 			}
+            $('#welcome_content').addClass('hidden');
 			$('#preshow_content').addClass('hidden');
 			$('#aftershow_content').addClass('hidden');
 			

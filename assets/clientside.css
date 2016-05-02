@@ -9,7 +9,7 @@ html, body { height: 100%; margin: 0; padding: 0; }
 /* Essentials */
 .container {
 	display: table;
-	background-image: url("http://23.251.135.169/livecolors/assets/img/ModernHeart.png");
+	background-image: url("http://23.251.135.169/livecolors/assets/img/ModernHeart.jpg");
 	/*background-position: calc(50% - 100px) 50%;*/
     background-position: center center;
 	background-size: cover;

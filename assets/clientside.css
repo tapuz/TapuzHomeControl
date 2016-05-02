@@ -9,7 +9,7 @@ html, body { height: 100%; margin: 0; padding: 0; }
 /* Essentials */
 .container {
 	display: table;
-	background-image: url("http://static1.squarespace.com/static/57041fae45bf214b427b0bff/t/570bd6948a65e23b63a4e50f/1460393621709/ModernHeart.jpg");
+	background-image: url("http://23.251.135.169/livecolors/assets/img/ModernHeart.png");
 	/*background-position: calc(50% - 100px) 50%;*/
     background-position: center center;
 	background-size: cover;
@@ -26,17 +26,7 @@ html, body { height: 100%; margin: 0; padding: 0; }
 .content-body { padding: 20px;}
 
 
-#bgOverlay {
-    width: 100%;
-    height: 100%;
-    top: 0;
-    right: 0;
-    bottom: 0;
-    left: 0;
-    position: absolute;
-    z-index: -1;
-    background-color: rgba(8,8,8,.7);
-}
+
 
 #title-area{
 	background-image: url("http://23.251.135.169/livecolors/assets/img/logomilow.png");
@@ -53,7 +43,7 @@ html, body { height: 100%; margin: 0; padding: 0; }
 	bottom: 0;
 	left: 0;
 	position: absolute;
-	z-index: 2;
+	z-index: 3;
 	background-color: black;	
 }
 #buttoncontainer{

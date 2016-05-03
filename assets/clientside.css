@@ -3,7 +3,11 @@
     transform: translate3d(-25%, 0, 0);
 	}
 	
-html, body { height: 100%; margin: 0; padding: 0; }
+html, body { 
+	height: 100%; 
+	margin: 0; 
+	padding: 0; 
+	}
 
 /* Essentials */
 .container {
@@ -15,24 +19,39 @@ html, body { height: 100%; margin: 0; padding: 0; }
 	background-attachment: fixed;
 	background-repeat: no-repeat;
 	z-index:1;
-}
-.content { display: table-row; height: 100%; }
-.content-body { display: table-cell; }
+	}
+	
+.content { 
+	display: table-row; 
+	height: 100%; 
+	}
+	
+.content-body { 
+	display: table-cell; 
+	}
 
 /* Aestetics */
-.container { width: 100%; height: 100%; }
-.header, .footer { padding: 10px 20px;}
-.content-body { padding: 20px;}
-
-
-
+.container { 
+	width: 100%; 
+	height: 100%; 
+	}
+	
+.header, .footer { 
+	padding: 10px 20px;
+	}
+	
+.content-body { 
+	padding: 20px;
+	}
 
 #title-area{
+	position:fixed;
+	top:0px;
 	background-image: url("http://23.251.135.169/livecolors/assets/img/logomilow.png");
 	background-position: center center;
 	background-repeat: no-repeat;
 	height: 50px;
-}
+	}
 
 #livecolors {
 	width: 100%;
@@ -44,8 +63,9 @@ html, body { height: 100%; margin: 0; padding: 0; }
 	position: absolute;
 	z-index: 3;
 	background-color: black;	
-}
-#buttoncontainer{
+	}
+
+#buttoncontainer {
 	width:40%;
 	text-align: center;
 	right:30%;
@@ -65,7 +85,9 @@ html, body { height: 100%; margin: 0; padding: 0; }
 	margin-top: 50px;
 	}
 
-#welcome_content, #preshow_content, #aftershow_content{
+#welcome_content, #preshow_content, #aftershow_content {
+	position:fixed;
+	top:50px;
 	margin-top:50px;
 	min-width:60%;
 	margin-left:20%;
@@ -73,13 +95,13 @@ html, body { height: 100%; margin: 0; padding: 0; }
 	color:rgba(255,255,255,1.00);
 	}
 
-#textfield{
+#textfield {
 	text-align:justify;
 	font-size:4vw;
 	}
 
 @media screen and (min-width: 600px) {
-#welcome_content, #preshow_content, #aftershow_content{
+#welcome_content, #preshow_content, #aftershow_content {
 	margin-top:10px;
 	min-width:80%;
 	margin-left:10%;
@@ -87,9 +109,7 @@ html, body { height: 100%; margin: 0; padding: 0; }
 	color:rgba(255,255,255,1.00);
 	}
 
-#textfield{
+#textfield {
 	text-align:justify;
 	font-size:2vw;
 	}
-	
-

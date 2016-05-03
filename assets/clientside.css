@@ -99,7 +99,7 @@ html, body {
 	font-size:4vw;
 	}
 
-@media screen and (min-width: 600px) {
+@media screen and (min-width: 550px) {
 #welcome_content, #preshow_content, #aftershow_content {
 	margin-top:10px;
 	min-width:80%;

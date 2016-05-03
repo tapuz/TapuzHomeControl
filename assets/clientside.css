@@ -48,8 +48,6 @@ html, body {
 	}
 
 #title-area{
-	position:fixed;
-	top:0px;
 	background-image: url("http://23.251.135.169/livecolors/assets/img/logomilow.png");
 	background-position: center center;
 	background-repeat: no-repeat;

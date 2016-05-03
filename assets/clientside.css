@@ -11,6 +11,7 @@ html, body {
 
 /* Essentials */
 .container {
+	min-width:300px;
 	display: table;
 	background-image: url("http://23.251.135.169/livecolors/assets/img/ModernHeart.jpg");
 	/*background-position: calc(50% - 100px) 50%;*/

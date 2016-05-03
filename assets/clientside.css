@@ -71,8 +71,6 @@ html, body {
 	text-align: center;
 	right:30%;
 	left:30%;
-	bottom: 20px;
-	position: fixed;
 	}
 
 #btn_entershow {
@@ -84,6 +82,7 @@ html, body {
 	font-size: large;
 	text-transform: uppercase;
 	margin-top: 50px;
+	margin-bottom:20px;
 	}
 
 #welcome_content, #preshow_content, #aftershow_content {

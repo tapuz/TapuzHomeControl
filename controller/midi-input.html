@@ -1,8 +1,8 @@
 <html>
 <head>
 	<script src="https://cdn.socket.io/socket.io-1.2.0.js"></script>
-	<script src="http://23.251.135.169/livecolors/assets/jquery-2.2.3.min.js"></script> 
-    <script src="http://ajax.googleapis.com/ajax/libs/jqueryui/1.8.23/jquery-ui.min.js"></script> 
+	<script src="http://23.251.143.86/livecolors/assets/jquery-2.2.3.min.js"></script> 
+    	<script src="http://ajax.googleapis.com/ajax/libs/jqueryui/1.8.23/jquery-ui.min.js"></script> 
    	<meta charset="UTF-8">
 	<title>Livecolors | Input | Midi</title>
     <style>
@@ -84,7 +84,7 @@
 	
 	<script>
 	(function(){
-		var socket = io.connect('http://23.251.135.169:3000');
+		var socket = io.connect('http://23.251.143.86:3000');
 		var log = console.log.bind(console), keyData = document.getElementById('key_data'), 
 				deviceInfoInputs = document.getElementById('inputs'), deviceInfoOutputs = document.getElementById('outputs'), 
 				device = document.querySelector('.device-name'), midi;

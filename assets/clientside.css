@@ -13,7 +13,7 @@ html, body {
 .container {
 	min-width:300px;
 	display: table;
-	background-image: url("http://23.251.135.169/livecolors/assets/img/ModernHeart.jpg");
+	background-image: url("http://23.251.143.86/livecolors/assets/img/ModernHeart.jpg");
 	/*background-position: calc(50% - 100px) 50%;*/
 	position:fixed;
 	top:0px;
@@ -48,7 +48,7 @@ html, body {
 	}
 
 #title-area{
-	background-image: url("http://23.251.135.169/livecolors/assets/img/logomilow.png");
+	background-image: url("http://23.251.143.86/livecolors/assets/img/logomilow.png");
 	background-position: center center;
 	background-repeat: no-repeat;
 	height: 50px;

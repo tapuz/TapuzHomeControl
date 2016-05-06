@@ -8,7 +8,7 @@
     <style>
 		body {
 			background-color:rgba(58,58,58,1.00);
-			color:rgba(116,116,116,1.00);
+			color:#f5a212;;
 			}
 		*:before, *:after {
 			-webkit-box-sizing: border-box;
@@ -23,7 +23,7 @@
 		}
 		
 		#outputwindow, #previewwindow {
-			border:thin solid rgba(162,162,162,1.00);
+			border:thin solid #f5a212;
 			}
 		
 		#content, #device_info, #connections {
@@ -45,7 +45,7 @@
 		}
 		.info {
 			padding: 20px;
-			border:thin solid rgba(162,162,162,1.00);
+			border:thin solid #f5a212;
 			background-color: rgba(58,58,58,1.00);
 		}
 		.small {
@@ -56,11 +56,19 @@
 			text-transform: uppercase;
 			font-weight: 800;
 		}
-		#toggle{
+		#toggleshow0, #toggleshow1, #toggleshow2{
+			margin-right: 10px;
 			width:100px;
-			background:rgba(155,155,155,1.00);
 			border:none;
 			height:40px;
+			}
+		.inactive {
+			background:rgba(155,155,155,1.00);
+			color: rgba(58,58,58,1.00);
+			}
+		.active {
+			background: #f5a212;
+			color: rgba(58,58,58,1.00);
 			}
 	</style>
 </head>
@@ -72,7 +80,7 @@
 	<div id="outputwindow" style="min-width:500px; min-height:100px">
    	</div>
     <br>
-    <input type="button" id="toggle" value="No show !" />
+    <input type="button" id="toggleshow0" value="No show !" class="inactive"/><input type="button" id="toggleshow1" value="Show live !" class="inactive"/><input type="button" id="toggleshow2" value="Show ended !" class="inactive"/>
     <br>
 	<h1 id="connections"></h1>
     	<div id="device_info">
@@ -94,27 +102,71 @@
 		var i=0;
 		var togglebutton=0;
 		
-		// showtoggle
-		$('#toggle').on('click', function() {
-			if (togglebutton == 0) {
-					togglebutton = 1;
-					socket.emit('showtoggle', 1);
-					$('#toggle').val('Showtime !');
-				} else {
-						if (togglebutton == 1) {
-								togglebutton = 2;
-								socket.emit('showtoggle', 2);
-								$('#toggle').val('Aftershow !');
-							} else {
-									if (togglebutton == 2) {
-											togglebutton = 0;
-											socket.emit('showtoggle', 0);
-											$('#toggle').val('No Show !');
-										}}}
-			
-			});
-        		
+		socket.emit('get_showstatus','showstatus');
+		socket.on('showstatus', function(status){
+			showstatus = status;
+			switch (showstatus){
+				case 0: //show has not started yet
+					$('#toggleshow0').removeClass('inactive');
+					$('#toggleshow0').addClass('active');
+					$('#toggleshow1').removeClass('active');
+					$('#toggleshow1').addClass('inactive');
+					$('#toggleshow2').removeClass('active');
+					$('#toggleshow2').addClass('inactive');
+					break;
+				case 1: //show has started 
+					$('#toggleshow0').removeClass('active');
+					$('#toggleshow0').addClass('inactive');
+					$('#toggleshow1').removeClass('inactive');
+					$('#toggleshow1').addClass('active');
+					$('#toggleshow2').removeClass('active');
+					$('#toggleshow2').addClass('inactive');
+					break;
+				case 2: //show is finished
+					$('#toggleshow0').removeClass('active');
+					$('#toggleshow0').addClass('inactive');
+					$('#toggleshow1').removeClass('active');
+					$('#toggleshow1').addClass('inactive');
+					$('#toggleshow2').removeClass('inactive');
+					$('#toggleshow2').addClass('active');
+					break;
+				
+			}
+		});
+
 		
+		// showtoggle
+		$('#toggleshow0').on('click', function() {
+					socket.emit('showtoggle', 0);	
+					$('#toggleshow0').removeClass('inactive');
+					$('#toggleshow0').addClass('active');
+					$('#toggleshow1').removeClass('active');
+					$('#toggleshow1').addClass('inactive');
+					$('#toggleshow2').removeClass('active');
+					$('#toggleshow2').addClass('inactive');
+
+		});
+		
+		$('#toggleshow1').on('click', function() {
+					socket.emit('showtoggle', 1);
+					$('#toggleshow0').removeClass('active');
+					$('#toggleshow0').addClass('inactive');
+					$('#toggleshow1').removeClass('inactive');
+					$('#toggleshow1').addClass('active');
+					$('#toggleshow2').removeClass('active');
+					$('#toggleshow2').addClass('inactive');
+		});
+		
+		$('#toggleshow2').on('click', function() {
+					socket.emit('showtoggle', 2);
+					$('#toggleshow0').removeClass('active');
+					$('#toggleshow0').addClass('inactive');
+					$('#toggleshow1').removeClass('active');
+					$('#toggleshow1').addClass('inactive');
+					$('#toggleshow2').removeClass('inactive');
+					$('#toggleshow2').addClass('active');
+		});		
+		        		
 		// get first fadetime from server
 		socket.emit('first_fade','first_fade');
 		socket.on('first_fade', function(firstfade){

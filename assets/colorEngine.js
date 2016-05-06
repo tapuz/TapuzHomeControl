@@ -1,4 +1,4 @@
-var socket = io.connect('http://23.251.143.86:80/');
+var socket = io.connect('http://23.251.143.86:3000/');
 var myStrobe;
 var set_color;
 var i=0;

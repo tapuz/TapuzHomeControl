@@ -6,16 +6,6 @@ $(function() {
         noSleep.enable(); // keep the screen on!
         screenLockEnabled = true;
         socket.emit('get_showstatus','showstatus');
-        
-        
-        
-        
-    }
-    
-    );
-	
-   
-   
-   
+    });
 });
 

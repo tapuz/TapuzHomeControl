@@ -18,6 +18,9 @@ app.get('/midi', function(req, res){
  	res.sendFile(__dirname + '/controller/midi-input.html');
 	});	
 
+app.use(express.static('assets'));
+
+
 io.on('connection', function(socket){
  	
 	http.getConnections(function(error, count) {

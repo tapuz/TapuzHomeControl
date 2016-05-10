@@ -1,15 +1,22 @@
+/*
+LiveColors
+
+COPYRIGHT 2016 - MICHEL SIEBEN & THIERRY DUHAMEEUW - ALL RIGHTS RESERVED
+*/
+
 var express = require('express');
 var app = express();
 
 
-
-//var app = require('express')();
 var http = require('http').Server(app);
-var io = require('socket.io')(http);
+var io = require('socket.io')(http,{pingTimeout: 3000,pingInterval: 3000});
 var last_color = "green";
 var last_fade = 0;
+var last_mode = 'static';
 var connections;
 var showstatus = 0;
+
+console.log ('last_fade_to_start=' + last_fade);
 
 app.get('/', function(req, res){
  	res.sendFile(__dirname + '/color.html');
@@ -53,13 +60,19 @@ io.on('connection', function(socket){
 		io.emit('first_color', last_color);
 		});
 		
-	socket.on('first_fade', function (fade){
+	socket.on('first_fade', function (){
 		io.emit('first_fade', last_fade);
+		console.log('firstfade emitted = ' + last_fade);
+		});
+	
+	socket.on('first_mode', function (){
+		io.emit('mode', last_mode);
+		console.log('last_mode emitted = ' + last_mode);
 		});
 	
 	socket.on('fade',function(fade){
 		last_fade = fade;
-		io.emit('fade',fade);
+		io.emit('fade',last_fade);
 		console.log(fade);    
 		});
 	 
@@ -67,10 +80,12 @@ io.on('connection', function(socket){
 		switch (mode) {
 			case 'strobe_on':
 				io.emit('mode','strobe');
+				last_mode = 'strobe';
 				console.log('strobe_on');
 				break;
 			case 'strobe_off':
 				io.emit('mode','static');
+				last_mode = 'static';
 				console.log('strobe_off');
 				break;
 				}

@@ -1,3 +1,9 @@
+/*
+ColorEngine
+
+COPYRIGHT 2016 - MICHEL SIEBEN & THIERRY DUHAMEEUW - ALL RIGHTS RESERVED
+
+*/
 var socket = io.connect('http://23.251.143.86:80/');
 var myStrobe;
 var set_color;
@@ -53,13 +59,6 @@ socket.on('showstatus', function(status){
 	}
 });
 
-
-// receive fade timing from server
-socket.on('fade', function(fade){
-	fadebackground = fade;
-});
-
-
 function stroboscoop(){
 		switch (i){
 			case i = 1:
@@ -79,9 +78,36 @@ function stroboscoop(){
 // check if there is a connection to the server
 socket.on('connect', function () {
 			$('#connectionstatus').html('Connection OK');
+            console.log('connected');
+            $('#lost_connection').addClass('hidden');
+            socket.emit('first_color','first_color'); //get first color
+            socket.emit('first_fade','first_fade'); // get first fade setting
+            socket.emit('first_mode','first_mode'); // get the first mode
+            //socket.emit('first_mode','first_mode');
+            console.log('connect fired');
 	});
 
-socket.emit('first_color','first_color');
+socket.on('disconnect', function(){
+     console.log('disconnect fired');
+     $('#lost_connection').removeClass('hidden');
+  });
+
+socket.on('reconnect', function() {
+            console.log('reconnect fired!');
+        });
+// receive fade timing from server
+socket.on('fade', function(fade){
+	fadebackground = fade;
+    console.log('fade received = ' + fadebackground);
+});
+
+socket.on('first_fade', function(fade){
+	fadebackground = fade;
+    console.log('first_fade received = ' + fadebackground);
+});
+
+
+
 socket.on('first_color', function (color){
 	if (fadebackground == 0) {
 		set_color = color;
@@ -114,3 +140,6 @@ socket.on('mode', function(mode){
 			break;
 		}
 });
+
+
+

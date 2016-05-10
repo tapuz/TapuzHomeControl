@@ -36,7 +36,9 @@ app.use(express.static('assets'));
 io.on('connection', function(socket){
  	
 	http.getConnections(function(error, count) {
-		connections = count;
+		//connections = count;
+		connections = io.engine.clientsCount;
+		io.emit('connections', connections);
 		console.log(connections + ' clients connected');
 		}); 
 	
@@ -91,12 +93,14 @@ io.on('connection', function(socket){
 				}
 		}); 
 	 
-	io.emit('connections', connections);
+	
 	
 	socket.on('disconnect', function(){
 		console.log('client disconnected');
 		http.getConnections(function(error, count) {
-			connections = count;
+			//connections = count;
+			connections = io.engine.clientsCount;
+			io.emit('connections', connections);
 			console.log(connections + ' clients connected');
 			});
 		});

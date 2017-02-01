@@ -7,16 +7,23 @@ COPYRIGHT 2016 - MICHEL SIEBEN & THIERRY DUHAMEEUW - ALL RIGHTS RESERVED
 var express = require('express');
 var app = express();
 
-
 var http = require('http').Server(app);
 var io = require('socket.io')(http,{pingTimeout: 3000,pingInterval: 3000});
-var last_color = "green";
-var last_fade = 0;
-var last_mode = 'static';
+//var last_color = "green";
+//var last_fade = 0;
+//var last_mode = 'static';
 var connections;
-var showstatus = 0;
+//var showstatus = 0;
 
-console.log ('last_fade_to_start=' + last_fade);
+var events = [];
+
+//push some event...later to be done dynamically
+events[1] = {id:1, name:"The ultimate show", showstatus:1, last_color:"blue", last_fade:0, last_mode:'static'};
+events[2] = {id:2, name:"DJ contest", showstatus:0, last_color:"green", last_fade:0, last_mode:'static'};
+events[3] = {id:3, name:"The summer of 17", showstatus:0, last_color:"green", last_fade:0, last_mode:'static'};
+events[4] = {id:4, name:"The very best party", showstatus:0, last_color:"green", last_fade:0, last_mode:'static'};
+
+
 
 app.get('/', function(req, res){
  	res.sendFile(__dirname + '/color.html');
@@ -25,16 +32,51 @@ app.get('/', function(req, res){
 app.get('/input', function(req, res){
  	res.sendFile(__dirname + '/controller/input.html');
 	});
+
+app.get('/beats', function(req, res){
+ 	res.sendFile(__dirname + '/beats.html');
+	});
 	
 app.get('/midi', function(req, res){
  	res.sendFile(__dirname + '/controller/midi-input.html');
 	});	
 
 app.use(express.static('assets'));
+app.use(express.static('assets/img'));
 
 
 io.on('connection', function(socket){
- 	
+	
+	//implement rooms
+ 	socket.on('join', function(event) {
+		socket.join(event);
+		console.log('event ' + event +' joined');
+		//send the init values for the event
+		socket.emit('init', events[event]);
+		
+		socket.emit('welcome',event);//for testing purp...
+		});
+
+    socket.on('leave', function(event) {
+		socket.leave(event);
+		console.log('event ' + event +' left');
+		});
+	
+	socket.on('message', function(data) {
+		socket.broadcast.to(data.event).emit('message', data.msg);
+		
+		console.log('sent:' + data.msg + ' to ' + data.event );
+		});
+	
+
+	
+	socket.on('showtoggle', function(data){
+			events[data.event].showstatus = data.status;
+			io.to(data.event).emit('showstatus',data.status);
+		});
+	
+
+	
 	http.getConnections(function(error, count) {
 		//connections = count;
 		connections = io.engine.clientsCount;
@@ -43,13 +85,10 @@ io.on('connection', function(socket){
 		}); 
 	
 	
-	socket.on('showtoggle', function(status){
-				showstatus = status;
-	    io.emit('showstatus', showstatus);
-		});
 		
-	socket.on('get_showstatus', function (){
+	socket.on('get_showstatus', function (event){
 		io.emit('showstatus', showstatus);
+		//socket.broadcast.to(event).emit('showstatus', );
 		});
 	
 	socket.on('color', function(color){
@@ -107,6 +146,6 @@ io.on('connection', function(socket){
 	 
 });
 
-http.listen(80, function(){
-	console.log('listening on *:80');
+http.listen(81, function(){
+	console.log('listening on *:81');
 	});

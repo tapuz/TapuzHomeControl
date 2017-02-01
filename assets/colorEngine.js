@@ -4,7 +4,10 @@ ColorEngine
 COPYRIGHT 2016 - MICHEL SIEBEN & THIERRY DUHAMEEUW - ALL RIGHTS RESERVED
 
 */
-var socket = io.connect('http://23.251.143.86:80/');
+
+
+
+var socket = io.connect('http://192.168.0.2:81/');
 var myStrobe;
 var set_color;
 var i=0;
@@ -13,7 +16,7 @@ var showstatus = 0;
 var screenLockEnabled = false;
 
  $('#welcome_content').toggle();
-        $('#preshow_content').toggle();
+ $('#preshow_content').toggle();
 
 //request showstatus from the server
 socket.emit('get_showstatus','showstatus');
@@ -140,6 +143,7 @@ socket.on('mode', function(mode){
 			break;
 		}
 });
+
 
 
 

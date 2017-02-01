@@ -33,15 +33,22 @@ COPYRIGHT 2016 - MICHEL SIEBEN & THIERRY DUHAMEEUW - ALL RIGHTS RESERVED
 <head>
 <title>Live Colors</title>
 <script src="NoSleep.min.js"></script>
-<script src="https://cdn.socket.io/socket.io-1.2.0.js"></script> 
+<script src="https://cdn.socket.io/socket.io-1.4.5.js"></script>
 <script src="jquery-2.2.3.min.js"></script> 
-<script src="http://ajax.googleapis.com/ajax/libs/jqueryui/1.8.23/jquery-ui.min.js"></script> 
-<script src="bootstrap.min.js"></script>
-<script src="colorEngine.js"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.8.23/jquery-ui.min.js"></script> 
+
+<script src="colorEngine_v2.js"></script>
 <script src="keepScreenOn.js"></script>
+<!-- Latest compiled and minified CSS -->
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+
+<!-- Optional theme -->
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css" integrity="sha384-rHyoN1iRsVXV4nD0JutlnGaslCJuC7uwjduW9SVrLvRYooPp2bWYgmgJQIXwl/Sp" crossorigin="anonymous">
+
+<!-- Latest compiled and minified JavaScript -->
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
 <link rel="stylesheet" type="text/css" href="clientside.css">
-<link rel="stylesheet" href="bootstrap.min.css">
-<link rel="stylesheet" href="bootstrap-theme.min.css">
+
 </head>
 <body>
 <div class="container">
@@ -58,11 +65,17 @@ COPYRIGHT 2016 - MICHEL SIEBEN & THIERRY DUHAMEEUW - ALL RIGHTS RESERVED
 	</header>
 	
 	<div id="welcome_content">
-		<div id="textfield">
-			<strong>MAY 10 - MEZZ - BREDA - NETHERLANDS</strong>
-			<br><br>
-			Tijdens bepaalde nummers zal het scherm van je smartphone oplichten in verschillende kleuren!<br>
-			Klik op START om door te gaan.
+		<div>
+			<H1>SELECT EVENT<H1>
+			<H2>Select your local event and wave those colors!!!</H2>
+		</div>
+		<div id="events">
+			<button class="btn_event" event_id="1">Crazy summer party</button>
+			<button class="btn_event" event_id="2">Dance party</button>
+			<button class="btn_event" event_id="3">Ultimate DJ contest</button>
+			<button class="btn_event" event_id="4">Summer of '17</button>
+			<button class="btn_event" event_id="100">Surprise</button>
+		
 		</div>
 		<div id="buttoncontainer">
 			<button id="btn_entershow">START</button>
@@ -70,23 +83,24 @@ COPYRIGHT 2016 - MICHEL SIEBEN & THIERRY DUHAMEEUW - ALL RIGHTS RESERVED
 	</div>
 	<div id="preshow_content" class="hidden">
 		<div id="textfield">
-			<strong>MAY 10 - MEZZ - BREDA - NETHERLANDS</strong>
+			<strong>Crazy summer PARTY 2017</strong>
 			<br><br>
-			<strong>Hou dit scherm open. De rest gebeurt vanzelf!!<br>
-			Have fun tonight!!</strong>
+			<strong>Welcome and have fun...</strong>
 			
 		</div>
 	</div>
 	<div id="aftershow_content" class="hidden">
 		<div id="textfield">
-			<strong>MAY 10 - MEZZ - BREDA - NETHERLANDS</strong>
+			<strong>Crazy summer PARTY 2017</strong>
 			<br><br>
-			<strong>EINDE<br>
-			Bedankt voor je komst!!</strong>
+			<strong>Goodbye<br>
+			Thanks for being here</strong>
 			
 		</div>
 	</div>
 </div>
+		
+
 </body>
 </html>
 

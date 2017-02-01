@@ -1,64 +1,105 @@
-<script src="https://cdn.socket.io/socket.io-1.2.0.js"></script>
-<link href="http://dev.rugcentrumgent.be/wp/app/assets/css/bootstrap.min.css" rel="stylesheet">
-<script src="http://dev.rugcentrumgent.be/wp/app/assets/js/jquery-2.0.3.min.js"></script>
+<script src="https://cdn.socket.io/socket.io-1.4.5.js"></script>
+<script src="jquery-2.2.3.min.js"></script> 
+<script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.8.23/jquery-ui.min.js"></script> 
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+
+<!-- Optional theme -->
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css" integrity="sha384-rHyoN1iRsVXV4nD0JutlnGaslCJuC7uwjduW9SVrLvRYooPp2bWYgmgJQIXwl/Sp" crossorigin="anonymous">
+
+<!-- Latest compiled and minified JavaScript -->
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
 
 <style>
-    .green {background-color: green; height: 30%; width: 25%; }
-    .yellow {background-color: yellow; height: 30%; width:25%;}
-    .red {background-color: red; height: 30%; width: 25%;}
-    .blue {background-color: blue; height: 30%; width: 25%;}
-    .white {background-color: white; height: 30%; width: 25%;}
+    .green {background-color: green; height: 15%; width: 12%; }
+    .yellow {background-color: yellow; height: 15%; width:12%;}
+    .red {background-color: red; height: 15%; width: 12%;}
+    .blue {background-color: blue; height: 15%; width: 12%;}
+    .white {background-color: white; height: 15%; width: 12%;}
 </style>
 
 <script>
-	
+
+
 $(function() {
    
-	var socket = io.connect('http://23.251.143.86:80/');
-    
+	var socket = io.connect('https://192.168.0.2:81');
+	var event = null;
+	 socket.on('clientsServerCount', function(data) {
+		$('#clientsServerCount').html(data + ' connections on the server');
+      
+      });
+	 
+	socket.on('clientsEventCount', function(data) {
+		$('#clientsEventCount').html(data + ' connections on the event');
+        console.log('count received');
+      });
     
     $('.color').click(function(){
         var color = $(this).attr( 'id' );
-        socket.emit('color', color);
+        socket.emit('color', {event:$('#event').val() , color:color});
     });
     
     $('#strobe_on').click(function(){
-        socket.emit('strobe', 'strobe_on');
+        socket.emit('strobe', {event:$('#event').val() , mode:'strobe'});
         
     });
     
     $('#strobe_off').click(function(){
-        socket.emit('strobe', 'strobe_off');
+        socket.emit('strobe', {event:$('#event').val() , mode:'static'});
         
     });
     $('#fade0').click(function(){
-        socket.emit('fade', 0);
+        socket.emit('fade', {event:$('#event').val() , duration:0});
     });
 	$('#fade100').click(function(){
-        socket.emit('fade', 100);
+        socket.emit('fade', {event:$('#event').val() , duration:100});
     });
 	$('#fade1000').click(function(){
-        socket.emit('fade', 1000);
+        socket.emit('fade', {event:$('#event').val() , duration:100});
     });
 	$('#fade2000').click(function(){
-        socket.emit('fade', 2000);
+        socket.emit('fade', {event:$('#event').val() , duration:2000});
     });
 
 	$('#showstatus_0').click(function(){
-        socket.emit('showtoggle', 0);
+		var event = $('#event').val();
+        socket.emit('showtoggle', {event: event, status: 0});
     });
 	
 	
 	$('#showstatus_1').click(function(){
-        socket.emit('showtoggle', 1);
+        var event = $('#event').val();
+        socket.emit('showtoggle', {event: event, status: 1});
     });
 	
 	
 	$('#showstatus_2').click(function(){
-        socket.emit('showtoggle', 2);
+        var event = $('#event').val();
+        socket.emit('showtoggle', {event: event, status: 2});
     });
 	
+	$('#say_hello').click(function(){
+		var event = $('#event').val();
+        socket.emit('message', {event: event, msg: 'hello there in event ' + event});
+	});
 	
+	$( "#event" ).change(function() {
+		console.log(event);
+		var old_event = event;
+        new_event = $('#event').val();
+        //lets connect to the event
+        socket.emit('join', new_event);
+        if (old_event !== null){
+			console.log('running the code');
+			console.log('old event ' + old_event);
+			socket.emit('leave', old_event);
+			}//socket.emit('leave', old_event);} //only emit 'leave' when user is connected to an event
+        event = new_event;
+		
+		
+	
+		
+	});
 
 });
 </script>
@@ -96,7 +137,17 @@ $(function() {
 		<button class="btn-primary" id="showstatus_1">Show</button>
 		<button class="btn-primary" id="showstatus_2">Post-Show</button>
 	</div>
+	<div class="row">
+		<input type="text" id="event">
+		<button class="btn-primary" id="say_hello">Say hello</button>
+	</div>
+	<div id="clientsServerCount">No clients connected to server</div>
+	<div id="clientsEventCount">No clients connected to event</div>
     
+    
+	
+	
+	
     
     
     

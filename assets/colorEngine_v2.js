@@ -1,7 +1,7 @@
 $(function() {
 
     var noSleep = new NoSleep();	
-    var socket = io.connect('https://192.168.0.2:81');
+    var socket = io.connect('http://192.168.0.2:81');
     var myStrobe;
     var set_color;
     var i=0;

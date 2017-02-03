@@ -1,0 +1,40 @@
+# This Source Code Form is subject to the terms of the Mozilla Public
+# License, v. 2.0. If a copy of the MPL was not distributed with this
+# file, You can obtain one at http://mozilla.org/MPL/2.0/.
+
+config:
+  target: "http://localhost:81"
+  phases:
+    - duration: 10
+      arrivalRate: 1
+    - duration: 10
+      arrivalRate: 5
+  
+scenarios:
+  - name: "A user that just lurks"
+    weight: 75
+    engine: "socketio"
+    flow:
+      - get:
+          url: "/"
+      - emit:
+          channel: "add user"
+          data: "lurker-{{$randomString()}}"
+      - think: 60
+
+  - name: "A mostly quiet user"
+    weight: 15
+    engine: "socketio"
+    flow:
+      - get:
+          url: "/"
+      - emit:
+          channel: "join"
+          data: 1
+      - think: 5
+      - emit:
+          channel: join
+          data: 2
+      - think: 60
+
+  

@@ -1,18 +1,16 @@
 var fs = require('fs');
-var https = require('https');
+var http = require('http');
+
+
 
 var express = require('express');
 var app = express();
 
 
-var options = {
-   key  : fs.readFileSync('server.key'),
-   cert : fs.readFileSync('server.crt')
-};
 
 var serverPort = 81;
 
-var server = https.createServer(options, app);
+var server = http.createServer(app);
 var io = require('socket.io')(server,{pingTimeout: 3000,pingInterval: 3000});
 
 //start keymetrics stuff
@@ -36,10 +34,10 @@ var events = [];
 
 //push some event...later to be done dynamically by the controller
 
-events[1] = {id:1, name:"The ultimate show", showstatus:1, last_color:"blue", last_fade:0, last_mode:'static', clients:0};
-events[2] = {id:2, name:"DJ contest", showstatus:0, last_color:"green", last_fade:0, last_mode:'static', clients:0};
-events[3] = {id:3, name:"The summer of 17", showstatus:0, last_color:"green", last_fade:0, last_mode:'static', clients:0};
-events[4] = {id:4, name:"The very best party", showstatus:0, last_color:"green", last_fade:0, last_mode:'static', clients:0};
+events.push({id:1, name:"The ultimate show", showstatus:1, last_color:"blue", last_fade:0, last_mode:'static', clients:0});
+events.push({id:2, name:"DJ contest", showstatus:0, last_color:"green", last_fade:0, last_mode:'static', clients:0});
+events.push({id:3, name:"The summer of 17", showstatus:0, last_color:"green", last_fade:0, last_mode:'static', clients:0});
+events.push({id:4, name:"The very best party", showstatus:0, last_color:"green", last_fade:0, last_mode:'static', clients:0});
 
 
 
@@ -47,10 +45,10 @@ var newEvent = {};
 
 newEvent= {id:100, name:"100 party", showstatus:1, last_color:"blue", last_fade:0, last_mode:'static', clients:0};
  
-events[newEvent.id] = newEvent; 
+//events[newEvent.id] = newEvent; 
  
  
-console.log(events.length + 'events');
+console.log(events.length + ' events');
 
 app.get('/', function(req, res){
  	res.sendFile(__dirname + '/color.html');
@@ -80,31 +78,59 @@ function numClientsInEvent(namespace, event) { //all clients reside in default n
          return 0;
       }
     }
+    
+//could use
+//var result = names.filter(function(v) {return v.id === 45; })[0];
+//but the getEvent function is quicker because it stops looking as soon as the event is found
+function getEvent(id){
+	for (var i = 0, len = events.length; i < len; i++) 
+	{
+  	  if (events[i].id === id)
+    	{
+      	  return events[i]; // Return as soon as the object is found
+    	}
+	}
+}
+
+function setEventProperty(id,property,value){
+	for (var i = 0, len = events.length; i < len; i++) 
+	{
+  	  if (events[i].id === id)
+    	{
+        events[i][property] = value;
+        return; // Return as soon as the object is found
+    	}
+	}
+}
+
 
 io.on('connection', function(socket){
    connections = io.engine.clientsCount;
    io.emit('clientsServerCount',io.engine.clientsCount); //change this so it only emits to admins and not to all clients
-      
+   socket.emit('events',events);   
 	
- 	socket.on('join', function(event) {
-		socket.join(event);
-		console.log('event ' + event +' joined');
+ 	socket.on('join', function(eventId) {
+		socket.join(eventId);
+		console.log('event ' + eventId +' joined');
 		//send the init values for the event
-		socket.emit('init', events[event]);
-		socket.emit('welcome',event);//for testing purp...
+    //filter the event array
+    var event = getEvent(Number(eventId)); //convert to int and search event
+  
+		socket.emit('init', event); //emits the event object
+		socket.emit('welcome','welcome to event ' + event.name);//for testing purp...
       
-      console.log(numClientsInEvent('/',event) + ' clients in event ' + event);
-      io.to(event).emit('clientsEventCount',(numClientsInEvent('/',event)));
+      console.log(numClientsInEvent('/',eventId) + ' clients in event ' + eventId);
+      io.to(eventId).emit('clientsEventCount',(numClientsInEvent('/',eventId)));
       
 		});
 
-   socket.on('leave', function(event) {
+   socket.on('leave', function(eventId) {
       
-      socket.leave(event);
-      io.to(event).emit('clientsEventCount',(numClientsInEvent('/',event)));
+      socket.leave(eventId);
+      io.to(eventId).emit('clientsEventCount',(numClientsInEvent('/',eventId)));
          
    
-   	console.log('event ' + event +' left');
+   	console.log('event ' + eventId +' left');
         
       //console.log(numClientsInEvent('/',event) + 'clients in event ' + event);
 		});
@@ -117,7 +143,9 @@ io.on('connection', function(socket){
 	
 	
 	socket.on('showtoggle', function(data){
-			events[data.event].showstatus = data.status;
+      console.log('the new status should be: ' + data.status);
+      setEventProperty(Number(data.event),'showstatus',Number(data.status));
+      //console.log('the saved one is: ' )
 			io.to(data.event).emit('showstatus',data.status);
 		});
 	
@@ -169,3 +197,18 @@ io.on('connection', function(socket){
 server.listen(serverPort, function() {
   console.log('server up and running at %s port', serverPort);
 });
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

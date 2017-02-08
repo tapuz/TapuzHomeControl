@@ -1,0 +1,295 @@
+{
+  "aggregate": {
+    "timestamp": "2017-02-01T22:40:03.788Z",
+    "scenariosCreated": 600,
+    "scenariosCompleted": 0,
+    "requestsCompleted": 0,
+    "latency": {
+      "min": null,
+      "max": null,
+      "median": null,
+      "p95": null,
+      "p99": null
+    },
+    "rps": {
+      "count": 600,
+      "mean": 9.96
+    },
+    "scenarioDuration": {
+      "min": null,
+      "max": null,
+      "median": null,
+      "p95": null,
+      "p99": null
+    },
+    "scenarioCounts": {
+      "0": 600
+    },
+    "errors": {
+      "DEPTH_ZERO_SELF_SIGNED_CERT": 600
+    },
+    "codes": {},
+    "matches": 0,
+    "customStats": {},
+    "phases": [
+      {
+        "duration": "60",
+        "arrivalRate": "10"
+      }
+    ]
+  },
+  "intermediate": [
+    {
+      "timestamp": "2017-02-01T22:39:09.937Z",
+      "scenariosCreated": 60,
+      "scenariosCompleted": 0,
+      "requestsCompleted": 0,
+      "latency": {
+        "min": null,
+        "max": null,
+        "median": null,
+        "p95": null,
+        "p99": null
+      },
+      "rps": {
+        "count": 60,
+        "mean": 9.35
+      },
+      "scenarioDuration": {
+        "min": null,
+        "max": null,
+        "median": null,
+        "p95": null,
+        "p99": null
+      },
+      "scenarioCounts": {
+        "0": 60
+      },
+      "errors": {
+        "DEPTH_ZERO_SELF_SIGNED_CERT": 60
+      },
+      "codes": {},
+      "matches": 0,
+      "latencies": [],
+      "customStats": {},
+      "concurrency": 1,
+      "pendingRequests": 208
+    },
+    {
+      "timestamp": "2017-02-01T22:39:19.971Z",
+      "scenariosCreated": 101,
+      "scenariosCompleted": 0,
+      "requestsCompleted": 0,
+      "latency": {
+        "min": null,
+        "max": null,
+        "median": null,
+        "p95": null,
+        "p99": null
+      },
+      "rps": {
+        "count": 101,
+        "mean": 9.47
+      },
+      "scenarioDuration": {
+        "min": null,
+        "max": null,
+        "median": null,
+        "p95": null,
+        "p99": null
+      },
+      "scenarioCounts": {
+        "0": 101
+      },
+      "errors": {
+        "DEPTH_ZERO_SELF_SIGNED_CERT": 101
+      },
+      "codes": {},
+      "matches": 0,
+      "latencies": [],
+      "customStats": {},
+      "concurrency": 1,
+      "pendingRequests": 1153
+    },
+    {
+      "timestamp": "2017-02-01T22:39:29.997Z",
+      "scenariosCreated": 101,
+      "scenariosCompleted": 0,
+      "requestsCompleted": 0,
+      "latency": {
+        "min": null,
+        "max": null,
+        "median": null,
+        "p95": null,
+        "p99": null
+      },
+      "rps": {
+        "count": 101,
+        "mean": 9.55
+      },
+      "scenarioDuration": {
+        "min": null,
+        "max": null,
+        "median": null,
+        "p95": null,
+        "p99": null
+      },
+      "scenarioCounts": {
+        "0": 101
+      },
+      "errors": {
+        "DEPTH_ZERO_SELF_SIGNED_CERT": 101
+      },
+      "codes": {},
+      "matches": 0,
+      "latencies": [],
+      "customStats": {},
+      "concurrency": 1,
+      "pendingRequests": 2167
+    },
+    {
+      "timestamp": "2017-02-01T22:39:40.018Z",
+      "scenariosCreated": 101,
+      "scenariosCompleted": 0,
+      "requestsCompleted": 0,
+      "latency": {
+        "min": null,
+        "max": null,
+        "median": null,
+        "p95": null,
+        "p99": null
+      },
+      "rps": {
+        "count": 101,
+        "mean": 9.63
+      },
+      "scenarioDuration": {
+        "min": null,
+        "max": null,
+        "median": null,
+        "p95": null,
+        "p99": null
+      },
+      "scenarioCounts": {
+        "0": 101
+      },
+      "errors": {
+        "DEPTH_ZERO_SELF_SIGNED_CERT": 101
+      },
+      "codes": {},
+      "matches": 0,
+      "latencies": [],
+      "customStats": {},
+      "concurrency": 1,
+      "pendingRequests": 3180
+    },
+    {
+      "timestamp": "2017-02-01T22:39:50.036Z",
+      "scenariosCreated": 102,
+      "scenariosCompleted": 0,
+      "requestsCompleted": 0,
+      "latency": {
+        "min": null,
+        "max": null,
+        "median": null,
+        "p95": null,
+        "p99": null
+      },
+      "rps": {
+        "count": 101,
+        "mean": 9.69
+      },
+      "scenarioDuration": {
+        "min": null,
+        "max": null,
+        "median": null,
+        "p95": null,
+        "p99": null
+      },
+      "scenarioCounts": {
+        "0": 102
+      },
+      "errors": {
+        "DEPTH_ZERO_SELF_SIGNED_CERT": 101
+      },
+      "codes": {},
+      "matches": 0,
+      "latencies": [],
+      "customStats": {},
+      "concurrency": 1,
+      "pendingRequests": 4187
+    },
+    {
+      "timestamp": "2017-02-01T22:40:00.048Z",
+      "scenariosCreated": 100,
+      "scenariosCompleted": 0,
+      "requestsCompleted": 0,
+      "latency": {
+        "min": null,
+        "max": null,
+        "median": null,
+        "p95": null,
+        "p99": null
+      },
+      "rps": {
+        "count": 101,
+        "mean": 9.78
+      },
+      "scenarioDuration": {
+        "min": null,
+        "max": null,
+        "median": null,
+        "p95": null,
+        "p99": null
+      },
+      "scenarioCounts": {
+        "0": 100
+      },
+      "errors": {
+        "DEPTH_ZERO_SELF_SIGNED_CERT": 101
+      },
+      "codes": {},
+      "matches": 0,
+      "latencies": [],
+      "customStats": {},
+      "concurrency": 1,
+      "pendingRequests": 5200
+    },
+    {
+      "timestamp": "2017-02-01T22:40:03.752Z",
+      "scenariosCreated": 35,
+      "scenariosCompleted": 0,
+      "requestsCompleted": 0,
+      "latency": {
+        "min": null,
+        "max": null,
+        "median": null,
+        "p95": null,
+        "p99": null
+      },
+      "rps": {
+        "count": 35,
+        "mean": 8.88
+      },
+      "scenarioDuration": {
+        "min": null,
+        "max": null,
+        "median": null,
+        "p95": null,
+        "p99": null
+      },
+      "scenarioCounts": {
+        "0": 35
+      },
+      "errors": {
+        "DEPTH_ZERO_SELF_SIGNED_CERT": 35
+      },
+      "codes": {},
+      "matches": 0,
+      "latencies": [],
+      "customStats": {},
+      "concurrency": 0,
+      "pendingRequests": 2355
+    }
+  ]
+}

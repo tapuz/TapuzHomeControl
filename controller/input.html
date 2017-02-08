@@ -22,7 +22,7 @@
 
 $(function() {
    
-	var socket = io.connect('http://192.168.0.2:81');
+	var socket = io.connect('http://178.119.235.183:81');
 	var event = null;
 	 socket.on('clientsServerCount', function(data) {
 		$('#clientsServerCount').html(data + ' connections on the server');

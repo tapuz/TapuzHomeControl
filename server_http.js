@@ -33,18 +33,18 @@ var events = [];
 
 //push some event...later to be done dynamically by the controller
 
-events.push({id:1, name:"The ultimate show", showstatus:1, last_color:"blue", last_fade:0, last_mode:'static', clients:0});
+events.push({id:1, name:"The ultimate show", showstatus:1, mainColor:"blue", beatColor:"yellow", interval:0, crossfade:0, triggerTime:0, clients:0});
 events.push({id:2, name:"DJ contest", showstatus:0, last_color:"green", last_fade:0, last_mode:'static', clients:0});
 events.push({id:3, name:"The summer of 17", showstatus:0, last_color:"green", last_fade:0, last_mode:'static', clients:0});
 events.push({id:4, name:"The very best party", showstatus:0, last_color:"green", last_fade:0, last_mode:'static', clients:0});
 
 
 
-var newEvent = {};
+//var newEvent = {};
 
-newEvent= {id:100, name:"100 party", showstatus:1, last_color:"blue", last_fade:0, last_mode:'static', clients:0};
+//newEvent= {id:100, name:"100 party", showstatus:1, last_color:"blue", last_fade:0, last_mode:'static', clients:0};
  
-//events[newEvent.id] = newEvent; 
+
  
  
 console.log(events.length + ' events');
@@ -106,16 +106,26 @@ function setEventProperty(id,property,value){
 io.on('connection', function(socket){
    connections = io.engine.clientsCount;
    io.emit('clientsServerCount',io.engine.clientsCount); //change this so it only emits to admins and not to all clients
-   socket.emit('events',events);   
+   
+   socket.on('requestEvents', function(geo){ //geo is the obj with lat/long
+		socket.emit('events',events);  
+   })
+
+    
 	
  	socket.on('join', function(eventId) {
 		socket.join(eventId);
 		console.log('event ' + eventId +' joined');
 		//send the init values for the event
-    //filter the event array
-    var event = getEvent(Number(eventId)); //convert to int and search event
+    	//filter the event array
+    	var event = getEvent(Number(eventId)); //convert to int and search event
   
 		socket.emit('init', event); //emits the event object
+		//calculate 
+		var d = new Date();
+      	var time = d.getTime();
+		var delta = (time - event.triggerTime)/event.interval;
+
 		socket.emit('welcome','welcome to event ' + event.name);//for testing purp...
       
       console.log(numClientsInEvent('/',eventId) + ' clients in event ' + eventId);
@@ -141,30 +151,43 @@ io.on('connection', function(socket){
 		});
 	
 	
-	socket.on('showtoggle', function(data){
+	socket.on('showstatus', function(data){
       console.log('the new status should be: ' + data.status);
       setEventProperty(Number(data.event),'showstatus',Number(data.status));
       //console.log('the saved one is: ' )
 			io.to(data.event).emit('showstatus',data.status);
 		});
+
+	socket.on('mainColor', function(data){
+      io.to(data.event).emit('mainColor',data.color);
+	  setEventProperty(Number(data.event),'mainColor',data.color)
+	  console.log('mainColor: ' + data.color);
+	});
+
+	socket.on('beatColor', function(data){
+      io.to(data.event).emit('beatColor',data.color);
+	  setEventProperty(Number(data.event),'beatColor',data.color)
+	  console.log('beatColor: ' + data.color);
+	});
+
+	socket.on('interval', function(data){
+	  //get time of action
+	  var d = new Date();
+      var time = d.getTime();
+	  
+      io.to(data.event).emit('interval',data.interval);
+	  setEventProperty(Number(data.event),'triggerTime',time)
+	  setEventProperty(Number(data.event),'interval',data.interval)
+	  console.log('interval: ' + data.interval);
+	});
+
+	socket.on('crossfade', function(data){
+      io.to(data.event).emit('crossfade',data.crossfade);
+	  setEventProperty(Number(data.event),'crossfade',data.crossfade)
+	  console.log('interval: ' + data.crossfade);
+	});
 	
-		
-	socket.on('get_showstatus', function (event){
-		io.emit('showstatus', showstatus);
-		//socket.broadcast.to(event).emit('showstatus', );
-		});
-	
-	socket.on('color', function(data){
-      io.to(data.event).emit('color',data.color);
-		events[data.event].last_color = data.color;
-     
-		console.log('new color is: ' + data.color);
-		});
-	 
-	socket.on('fade',function(data){
-      io.to(data.event).emit('fade',data.duration);
-		events[data.event].last_fade = data.duration;
-		});
+
 	 
 	socket.on('strobe', function(data){
 		switch (data.mode){
